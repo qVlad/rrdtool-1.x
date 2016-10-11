@@ -32,6 +32,7 @@ enum cf_en cf_conv(
 {
 
     converter(AVERAGE, CF_AVERAGE)
+		converter(SUM, CF_SUM)
         converter(MIN, CF_MINIMUM)
         converter(MAX, CF_MAXIMUM)
         converter(LAST, CF_LAST)
@@ -49,6 +50,7 @@ const char *cf_to_string (enum cf_en cf)
 {
     switch (cf)
     {
+    	case CF_SUM:		 return "SUM";
         case CF_AVERAGE:     return "AVERAGE";
         case CF_MINIMUM:     return "MIN";
         case CF_MAXIMUM:     return "MAX";

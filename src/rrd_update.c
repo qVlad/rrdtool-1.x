@@ -2002,6 +2002,12 @@ static void initialize_cdp_val(
     rrd_value_t cum_val, cur_val;
 
     switch (current_cf) {
+    case CF_SUM:
+    	cum_val = IFDNAN(scratch[CDP_val].u_val, 0.0);
+		cur_val = IFDNAN(pdp_temp_val, 0.0);
+		scratch[CDP_primary_val].u_val =
+			(cum_val + cur_val * start_pdp_offset);
+    	break;
     case CF_AVERAGE:
         cum_val = IFDNAN(scratch[CDP_val].u_val, 0.0);
         cur_val = IFDNAN(pdp_temp_val, 0.0);
@@ -2172,6 +2178,8 @@ static rrd_value_t calculate_cdp_val(
     }
     if (current_cf == CF_AVERAGE)
         return cdp_val + pdp_temp_val * elapsed_pdp_st;
+    if (current_cf == CF_SUM)
+           return cdp_val + pdp_temp_val;
     if (current_cf == CF_MINIMUM)
         return (pdp_temp_val < cdp_val) ? pdp_temp_val : cdp_val;
     if (current_cf == CF_MAXIMUM)

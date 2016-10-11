@@ -332,6 +332,7 @@ int rrd_fetch_fn(
 		  ||(cf_idx == CF_MAXIMUM)
 		  ||(cf_idx == CF_AVERAGE)
 		  ||(cf_idx == CF_LAST)
+		  ||(cf_idx == CF_SUM)
 		  )
 	      && (
 		  /* and found CF is MIN,MAX,AVERAGE,LAST */
@@ -339,6 +340,7 @@ int rrd_fetch_fn(
 		  ||(rratype == CF_MAXIMUM)
 		  ||(rratype == CF_AVERAGE)
 		  ||(rratype == CF_LAST)
+		  ||(rratype == CF_SUM)
 		  )
 	      )
 	  ){

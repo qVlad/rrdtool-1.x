@@ -1725,7 +1725,9 @@ static long total_coverage(const coverage_t *coverage, const int *array_size) {
 static rrd_value_t prefill_consolidate(rra_def_t UNUSED(*rra_def), enum cf_en current_cf, 
         rrd_value_t current_estimate, 
         rrd_value_t added_value, 
-        int target_bin_size, int newly_covered_size) {
+        int target_bin_size, //in seconds
+		int newly_covered_size) {
+	//#INFO:newly_covered_size=target_bin_size
     switch (current_cf) {
     case CF_MINIMUM:
         if (isnan(current_estimate)) return added_value;
@@ -1739,6 +1741,10 @@ static rrd_value_t prefill_consolidate(rra_def_t UNUSED(*rra_def), enum cf_en cu
          * from the caller.
          */
         return added_value;
+    case CF_SUM:
+    	if (isnan(current_estimate)) current_estimate = 0.0;
+    	// #INFO: need think about save over int value
+    	return current_estimate + added_value;
     case CF_AVERAGE:
     default:
         if (isnan(current_estimate)) current_estimate = 0.0;
@@ -1755,6 +1761,7 @@ static rrd_value_t prefill_finish(rra_def_t UNUSED(*rra_def), enum cf_en current
     switch (current_cf) {
     case CF_AVERAGE:
         return current_estimate / total_covered_size * target_bin_size;
+    case CF_SUM:
     case CF_MINIMUM:
     case CF_MAXIMUM:
     case CF_LAST:

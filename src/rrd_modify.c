@@ -423,6 +423,7 @@ static int populate_row(const rrd_t *in_rrd,
     case CF_MINIMUM:
     case CF_MAXIMUM:
     case CF_LAST:
+    case CF_SUM:
 	break;
     default: // unsupported CF for extension
 	return 0;
@@ -530,6 +531,10 @@ static int populate_row(const rrd_t *in_rrd,
 			covered += cand_timeslot;
 			final = tmp / covered;
 			break;
+		    case CF_SUM:
+			tmp = isnan(tmp) ? v * cand_timeslot : (tmp + v * cand_timeslot);
+			final = tmp;
+		    break;
 		    case CF_MINIMUM:
 			final = tmp = isnan(tmp) ? v : (tmp < v ? tmp : v);
 			break;
@@ -715,6 +720,7 @@ static int stretch_rras(rrd_t *out, int stretch) {
 	    case CF_MINIMUM:
 	    case CF_MAXIMUM:
 	    case CF_LAST:
+	    case CF_SUM:
 		(cdp_prep_row + ds_index)->scratch[CDP_unkn_pdp_cnt].u_val *= stretch;
 		break;
 	    default:

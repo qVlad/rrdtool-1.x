@@ -267,6 +267,7 @@ int rrd_dump_cb_r(
             CB_FMTS("\t\t<dependent_rra_idx>%lu</dependent_rra_idx>\n",
                 rrd.rra_def[i].par[RRA_dependent_rra_idx].u_cnt);
             break;
+        case CF_SUM:
         case CF_AVERAGE:
         case CF_MAXIMUM:
         case CF_MINIMUM:
@@ -386,6 +387,7 @@ int rrd_dump_cb_r(
                 CB_PUTS("</history>\n");
             }
                 break;
+            case CF_SUM:
             case CF_AVERAGE:
             case CF_MAXIMUM:
             case CF_MINIMUM:

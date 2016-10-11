@@ -500,6 +500,7 @@ int update_aberrant_CF(
             return -1;
         }
     case CF_AVERAGE:
+    case CF_SUM:
     default:
         return 0;
     }

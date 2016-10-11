@@ -869,6 +869,7 @@ int reduce_data(
                     case CF_DEVPREDICT:
                     case CF_SEASONAL:
                     case CF_AVERAGE:
+                    case CF_SUM:
                         newval += srcptr[i * (*ds_cnt) + col];
                         break;
                     case CF_MINIMUM:
@@ -901,6 +902,7 @@ int reduce_data(
                 case CF_FAILURES:
                 case CF_MAXIMUM:
                 case CF_LAST:
+                case CF_SUM:
                     break;
                 }
             }
@@ -1845,6 +1847,7 @@ int print_calc(
                     case CF_DEVSEASONAL:
                     case CF_SEASONAL:
                     case CF_AVERAGE:
+                    case CF_SUM:
                         validsteps++;
                         printval += im->gdes[vidx].data[ii];
                         break;
@@ -1859,7 +1862,8 @@ int print_calc(
                         printval = im->gdes[vidx].data[ii];
                     }
                 }
-                if (im->gdes[i].cf == CF_AVERAGE || im->gdes[i].cf > CF_LAST) {
+                if ((im->gdes[i].cf == CF_AVERAGE || im->gdes[i].cf > CF_LAST)
+                		&& im->gdes[i].cf != CF_SUM) {
                     if (validsteps > 1) {
                         printval = (printval / validsteps);
                     }

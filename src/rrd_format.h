@@ -197,7 +197,9 @@ enum cf_en { CF_AVERAGE = 0,    /* data consolidation functions */
      * */
     CF_FAILURES,
     /* HWPREDICT that follows a moving baseline */
-    CF_MHWPREDICT
+    CF_MHWPREDICT,
+	/* SUM sum of elements*/
+	CF_SUM
         /* new entries must come last !!! */
 };
 
